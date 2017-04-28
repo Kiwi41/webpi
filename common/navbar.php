@@ -23,7 +23,7 @@ function isActive($requestUri)
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>                        
 			</button>
-			<a class="navbar-brand" href="#">Logo</a>
+			<a class="navbar-brand" href="#"><img src="/common/logo.png" width="27px" alt="Logo"></a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
