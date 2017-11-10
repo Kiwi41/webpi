@@ -16,6 +16,12 @@
 	<input type="text" name="cmd">
 	<input type="submit" value="exec">
 	</form>
+	<form action="./script.php" method="get">
+	<input type="text" name="message">
+	<input type="text" name="number">
+	<input type="text" name="token">
+	<input type="submit" value="exec">
+	</form>
 
       <hr>
       <h3>Test</h3>

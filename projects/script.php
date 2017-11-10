@@ -36,7 +36,8 @@ if (!$message || !$number_array) {
     header('HTTP/1.0 403 Forbidden');
     exit;
 }
- 
+$o = null;
+$r = null; 
 foreach ($number_array as $number) {
-    exec('echo "'.$message.'" | sudo gammu-smsd-inject TEXT '.$number.' &');
+    exec('echo "'.$message.'" | gammu-smsd-inject TEXT '.$number.' 2>&1 &', $o, $r );
 }
