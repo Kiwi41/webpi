@@ -8,6 +8,14 @@
   <div class="row content">
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/common/left.php"; ?>
+<?php 
+$array_get = array("to", "message", "token", "submit");
+
+foreach ($array_get as $value){
+   if(isset($_GET[$value])) { $$value = $_GET[$value];}
+}
+?>
+
 <?php
   $servername = "localhost";
   $username = "smsd";
@@ -24,11 +32,11 @@
   <div class="col-sm-8 text-left"> 
       <h1>SMS</h1>
       <p>Welcome to the SMS GUI</p>
-	<form action="./script.php" method="get">
-	<input type="text" name="message">
-	<input type="text" name="number">
-	<input type="text" name="token">
-	<input type="submit" value="exec">
+	<form action="./sms.php" method="get">
+	<input type="text" name="message" title="Type your message here" placeholder="blablabla">
+	<input type="text" name="to" title="Type the phone number here" placeholder="0669671360">
+	<input type="text" name="token" title="Type the secret password to send sms" placeholder="secret">
+	<button type="submit" name="submit" value="1" class="btn btn-success">Validate</button>
 	</form>
      <div class="col-sm-6 text-left"> 
       <h1>Inbox</h1>
@@ -64,8 +72,8 @@
          ?>
       <hr>
       </div>
-  </div>
-
+<div class="col-sm-4 text-left"> 
+      <h1>Debug div</h1>
 <?php
               $sql = "SELECT DestinationNumber as Number FROM `sentitems` union SELECT SenderNumber as Number FROM `inbox`";
               $result = $conn->query($sql);
@@ -79,8 +87,12 @@
               }
 foreach ($Number as $value) {
 	echo "Number : $value<br />\n";
-}
+} 
+print_r($_GET);
 ?>
+</div>
+  </div>
+
 <?php $conn->close(); ?>
 <?php include $_SERVER['DOCUMENT_ROOT']."/common/right.php"; ?>
 
