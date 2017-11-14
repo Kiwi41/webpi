@@ -8,7 +8,19 @@
   <div class="row content">
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/common/left.php"; ?>
-  
+<?php
+  $servername = "localhost";
+  $username = "smsd";
+  $password = "password";
+  $dbname = "smsd";
+   
+  // Create connection
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  // Check connection
+  if ($conn->connect_error) {
+       die("Connection failed: " . $conn->connect_error);
+  }
+?>  
   <div class="col-sm-8 text-left"> 
       <h1>SMS</h1>
       <p>Welcome to the SMS GUI</p>
@@ -21,18 +33,6 @@
      <div class="col-sm-6 text-left"> 
       <h1>Inbox</h1>
          <?php
-              $servername = "localhost";
-              $username = "smsd";
-              $password = "password";
-              $dbname = "smsd";
-   
-              // Create connection
-              $conn = new mysqli($servername, $username, $password, $dbname);
-              // Check connection
-              if ($conn->connect_error) {
-                  die("Connection failed: " . $conn->connect_error);
-              }
-
               $sql = "SELECT ReceivingDateTime,SenderNumber,TextDecoded FROM `inbox` order by SenderNumber,ReceivingDateTime";
               $result = $conn->query($sql);
 
@@ -44,25 +44,12 @@
               } else {
                  echo "0 results";
               }
-              $conn->close();
          ?> 
       <hr>
       </div>
      <div class="col-sm-6 text-left">
       <h1>Outbox</h1>
          <?php
-              $servername = "localhost";
-              $username = "smsd";
-              $password = "password";
-              $dbname = "smsd";
-
-              // Create connection
-              $conn = new mysqli($servername, $username, $password, $dbname);
-              // Check connection
-              if ($conn->connect_error) {
-                  die("Connection failed: " . $conn->connect_error);
-              }
-
               $sql = "SELECT SendingDateTime,DestinationNumber,TextDecoded FROM `sentitems` order by DestinationNumber,SendingDateTime";
               $result = $conn->query($sql);
 
@@ -74,41 +61,27 @@
               } else {
                  echo "0 results";
               }
-              $conn->close();
          ?>
       <hr>
       </div>
   </div>
 
 <?php
-              $servername = "localhost";
-              $username = "smsd";
-              $password = "password";
-              $dbname = "smsd";
-
-              // Create connection
-              $conn = new mysqli($servername, $username, $password, $dbname);
-              // Check connection
-              if ($conn->connect_error) {
-                  die("Connection failed: " . $conn->connect_error);
-              }
-
-              $sql = "SELECT DestinationNumber as number FROM `sentitems` union SELECT SenderNumber FROM `inbox`";
+              $sql = "SELECT DestinationNumber as Number FROM `sentitems` union SELECT SenderNumber as Number FROM `inbox`";
               $result = $conn->query($sql);
               if ($result->num_rows > 0) {
                   // output data of each row
                 while($row = $result->fetch_assoc()) {
-                   $number[] = $row['number']; // Inside while loop
+                   $Number[] = $row['Number']; // Inside while loop
                 }
               } else {
                  echo "0 results";
               }
-              $conn->close();
-foreach ($number as $value) {
-	echo "Valeur : $value<br />\n";
+foreach ($Number as $value) {
+	echo "Number : $value<br />\n";
 }
 ?>
-
+<?php $conn->close(); ?>
 <?php include $_SERVER['DOCUMENT_ROOT']."/common/right.php"; ?>
 
   </div>
